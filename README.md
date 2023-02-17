@@ -4,10 +4,10 @@ This repository is a playground for exploring the AWS Cloud Development Kit (CDK
 
 ## Benefits of using AWS CDK
 
-- **Infrastructure as Code** - CDK uses code to define and provision your AWS resources
-- **Familiar programming languages** - CDK supports TypeScript, Python, Java, and C#
-- **Reusable components** - CDK allows you to define stacks and reuse them for different use cases
-- **Speed and automation** - CDK makes it easy to spin up and tear down entire AWS environments with a single command
+- **Infrastructure as Code** - Use code to define and provision your AWS resources
+- **Familiar programming language** - It's easy to use if you're familiar with TypeScript or JavaScript
+- **Reusable components** - Define stacks and reuse them for different use cases
+- **Speed and automation** - Spin up and tear down entire AWS environments with a single command
 
 ## Prerequisites
 

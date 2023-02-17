@@ -46,6 +46,13 @@ export class CdkWorkshopStack extends cdk.Stack {
 
     const targetGroup = new elbv2.ApplicationTargetGroup(this, "TargetGroup", {
       port: 80,
+      healthCheck: {
+        healthyThresholdCount: 2,
+        unhealthyThresholdCount: 3,
+        timeout: Duration.seconds(3),
+        interval: Duration.seconds(30),
+        path: "/health",
+      },
     });
 
     const listener = elb.addListener("Listener", {

@@ -50,7 +50,6 @@ Deploy the stack using the following command:
 cdk deploy
 ```
 
-Make sure to replace <your-stack-name> with a unique name for your stack, and <your-environment-name> with the name of the AWS environment you want to deploy to (e.g., dev, staging, prod).
 
 If you want to destroy the stack after you're done experimenting, use the following command:
 

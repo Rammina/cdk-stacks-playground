@@ -32,10 +32,22 @@ Select a stack that you want to deploy and open its corresponding .ts file.
 
 Update the stack's configuration, such as the AWS region, resource properties, and any other relevant settings.
 
+If it's your first time deploying AWS CDK stacks, you need to bootstrap the necessary resources with this command:
+
+```sh
+cdk bootstrap
+```
+
+Synthesize the AWS CloudFormation template from the CDK using the following command:
+
+```sh
+cdk synth
+```
+
 Deploy the stack using the following command:
 
 ```sh
-npm run deploy -- -c stackName=<your-stack-name> -c env=<your-environment-name>
+cdk deploy
 ```
 
 Make sure to replace <your-stack-name> with a unique name for your stack, and <your-environment-name> with the name of the AWS environment you want to deploy to (e.g., dev, staging, prod).
@@ -43,7 +55,7 @@ Make sure to replace <your-stack-name> with a unique name for your stack, and <y
 If you want to destroy the stack after you're done experimenting, use the following command:
 
 ```sh
-npm run destroy -- -c stackName=<your-stack-name> -c env=<your-environment-name>
+cdk destroy
 ```
 
 ## Contributing

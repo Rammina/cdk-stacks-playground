@@ -18,8 +18,6 @@ Before getting started with the AWS CDK v2 Typescript Playground, you need to ha
 - [Node.js 14.x](https://nodejs.org/en/download/) or above
 - [AWS CDK Toolkit v2](https://docs.aws.amazon.com/cdk/v2/guide/cli.html) configured
 
-npm install -g aws-cdk
-
 ## Installation
 
 Clone this repository to your local machine:

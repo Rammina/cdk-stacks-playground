@@ -71,4 +71,4 @@ If you want to contribute to the AWS CDK v2 Typescript Playground, please create
 
 ## License
 
-This repository is licensed under the MIT License.
+This project is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).

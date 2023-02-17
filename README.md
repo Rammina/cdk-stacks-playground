@@ -26,7 +26,7 @@ npm install
 
 ## Usage
 
-Navigate to the /lib directory, which contains the different CDK stacks that you can use to deploy AWS resources and architectures.
+Navigate to the `/lib` directory, which contains the different CDK stacks that you can use to deploy AWS resources and architectures.
 
 Select a stack that you want to deploy and open its corresponding .ts file.
 

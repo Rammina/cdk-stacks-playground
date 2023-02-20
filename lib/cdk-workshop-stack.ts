@@ -9,13 +9,28 @@ export class CdkWorkshopStack extends cdk.Stack {
     super(scope, id, props);
 
     // Resources
-    const stackDefaultVpc = ec2.Vpc.fromLookup(this, "VPC", {});
+    // Define a VPC with 2 subnets (1 private, 1 public)
+    const vpc = new ec2.Vpc(this, "Vpc", {
+      subnetConfiguration: [
+        {
+          subnetType: ec2.SubnetType.PUBLIC,
+          name: "Public",
+          cidrMask: 24,
+          mapPublicIpOnLaunch: true,
+        },
+        {
+          subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+          name: "Private",
+          cidrMask: 24,
+        },
+      ],
+    });
 
     const instanceSecurityGroup = new ec2.SecurityGroup(
       this,
       "InstanceSecurityGroup",
       {
-        vpc: stackDefaultVpc,
+        vpc,
       }
     );
     instanceSecurityGroup.addIngressRule(
@@ -25,7 +40,7 @@ export class CdkWorkshopStack extends cdk.Stack {
     );
 
     const elbSecurityGroup = new ec2.SecurityGroup(this, "ElbSecurityGroup", {
-      vpc: stackDefaultVpc,
+      vpc,
     });
     elbSecurityGroup.addIngressRule(
       ec2.Peer.anyIpv4(),
@@ -40,12 +55,20 @@ export class CdkWorkshopStack extends cdk.Stack {
 
     const elb = new elbv2.ApplicationLoadBalancer(this, "Elb", {
       securityGroup: elbSecurityGroup,
-      vpc: stackDefaultVpc,
+      vpc,
       internetFacing: true,
     });
 
     const targetGroup = new elbv2.ApplicationTargetGroup(this, "TargetGroup", {
       port: 80,
+      healthCheck: {
+        healthyThresholdCount: 2,
+        unhealthyThresholdCount: 3,
+        timeout: Duration.seconds(3),
+        interval: Duration.seconds(30),
+        path: "/health",
+      },
+      vpc,
     });
 
     const listener = elb.addListener("Listener", {
@@ -64,8 +87,18 @@ export class CdkWorkshopStack extends cdk.Stack {
 
     const asg = new autoscaling.AutoScalingGroup(this, "AutoscalingGroup", {
       launchTemplate,
-      vpc: stackDefaultVpc,
+      vpc,
+      vpcSubnets: {
+        subnets: [vpc.publicSubnets[0]],
+      },
     });
     asg.attachToApplicationTargetGroup(targetGroup);
+
+    // outputs for resources that other stacks can use
+    new cdk.CfnOutput(this, "VpcName", { value: vpc.vpcId });
+    new cdk.CfnOutput(this, "ASGName", { value: asg.autoScalingGroupName });
+    new cdk.CfnOutput(this, "LoadBalancerDNS", {
+      value: elb.loadBalancerDnsName,
+    });
   }
 }

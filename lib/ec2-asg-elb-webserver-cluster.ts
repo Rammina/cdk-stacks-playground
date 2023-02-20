@@ -10,7 +10,7 @@ export class CdkWorkshopStack extends cdk.Stack {
     super(scope, id, props);
 
     // Resources
-    // Define a VPC with 2 subnets (1 private, 1 public)
+    // Define a VPC with 3 subnets ( 2 public, 1 private )
     const vpc = new ec2.Vpc(this, "Vpc", {
       subnetConfiguration: [
         {
